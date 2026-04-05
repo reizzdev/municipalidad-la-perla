@@ -39,7 +39,7 @@ return (
         </div>
 
         <Link
-          href="#"
+          href="https://www.gob.pe/institucion/munilaperla/noticias"
           className="group flex items-center gap-2 text-sm font-bold text-[#3389B5] hover:text-[#1a3a5c] transition-colors"
         >
           Ver todas

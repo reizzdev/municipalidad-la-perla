@@ -13,16 +13,16 @@ export default function Footer() {
 
         {/* Social icons */}
         <div className="flex items-center gap-3">
-          <a href="#" aria-label="Facebook" className="text-white/70 hover:text-[#3dbfb8] transition-colors">
+          <a href="https://www.facebook.com/MunicipalidaddeLaPerla" aria-label="Facebook" className="text-white/70 hover:text-[#3dbfb8] transition-colors">
             <Facebook size={20} />
           </a>
-          <a href="#" aria-label="Twitter / X" className="text-white/70 hover:text-[#3dbfb8] transition-colors">
+          <a href="https://x.com/MuniLaPerla" aria-label="Twitter / X" className="text-white/70 hover:text-[#3dbfb8] transition-colors">
             <Twitter size={20} />
           </a>
-          <a href="#" aria-label="Instagram" className="text-white/70 hover:text-[#3dbfb8] transition-colors">
+          <a href="https://www.instagram.com/munilaperla/" aria-label="Instagram" className="text-white/70 hover:text-[#3dbfb8] transition-colors">
             <Instagram size={20} />
           </a>
-          <a href="#" aria-label="YouTube" className="text-white/70 hover:text-[#3dbfb8] transition-colors">
+          <a href="https://www.youtube.com/@municipalidaddelaperla3321" aria-label="YouTube" className="text-white/70 hover:text-[#3dbfb8] transition-colors">
             <Youtube size={20} />
           </a>
         </div>

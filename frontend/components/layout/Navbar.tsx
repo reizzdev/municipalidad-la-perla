@@ -29,18 +29,18 @@ const NAV_ITEMS: NavItem[] = [
     label: "Servicios",
     action: "dropdown",
     dropdown: [
-      { label: "Tramites",            href: "#" },
-      { label: "Registro de Visitas", href: "#" },
-      { label: "Bolsa de Trabajo",    href: "#" },
+      { label: "Tramites",            href: "https://www.gob.pe/institucion/munilaperla/tramites-y-servicios" },
+      { label: "Registro de Visitas", href: "https://munilaperla.gob.pe/visitas.php" },
+      { label: "Bolsa de Trabajo",    href: "https://munilaperla.gob.pe/convocatorias-mdlp.html#" },
     ],
   },
-  { label: "Autoridades",  action: "page",     href: "/autoridades" },
+  { label: "Autoridades",  action: "page",     href: "https://www.gob.pe/institucion/munilaperla/funcionarios" },
   {
     label: "Publicaciones",
     action: "dropdown",
     dropdown: [
       { label: "Ordenanzas",    href: "#" },
-      { label: "Resoluciones",  href: "#" },
+      { label: "Resoluciones",  href: "https://www.gob.pe/institucion/munilaperla/colecciones/14603-resoluciones-de-alcaldia" },
       { label: "Decretos",      href: "#" },
     ],
   },

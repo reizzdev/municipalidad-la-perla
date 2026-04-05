@@ -26,7 +26,9 @@ export default function Header() {
         </Link>
 
         {/* LOGOS GUBERNAMENTALES */}
+
         <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+          <Link href="https://www.gob.pe/munilaperla">
           <Image
             src="/images/logoGobPe.png"
             alt="gob.pe"
@@ -34,6 +36,8 @@ export default function Header() {
             height={36}
             className="object-contain max-w-[70px] sm:max-w-[100px] h-auto"
           />
+          </Link>
+          <Link href="https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=10940">
           <Image
             src="/images/logoTransparencia.png"
             alt="Portal de Transparencia"
@@ -41,6 +45,7 @@ export default function Header() {
             height={40}
             className="object-contain max-w-[72px] sm:max-w-[100px] h-auto"
           />
+          </Link>
         </div>
 
       </div>
