@@ -62,7 +62,6 @@ const cls = {
 
  {/* SUBCOMPONENTES */}
 
- {/* BUSCADOR DE ESCRITORIO */}
 function SearchBar({ className, inputClass }: { className?: string; inputClass?: string }) {
   return (
     <div className={`${cls.searchBox} ${className ?? ""}`}>
@@ -76,7 +75,6 @@ function SearchBar({ className, inputClass }: { className?: string; inputClass?:
   );
 }
 
- {/* FLECHA LATERAL DE LOS NAVBAR */}
 function Chevron({ open }: { open: boolean }) {
   return (
     <ChevronDown
@@ -91,13 +89,14 @@ function Chevron({ open }: { open: boolean }) {
 export default function Navbar() {
   const [mobileOpen,   setMobileOpen]   = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLElement>(null);
 
-  // Cierra dropdown al hacer click fuera
+  // Cierra dropdown Y menu mobile al hacer click fuera
   useEffect(() => {
     function onOutsideClick(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
         setOpenDropdown(null);
+        setMobileOpen(false);
       }
     }
     document.addEventListener("mousedown", onOutsideClick);
@@ -133,7 +132,6 @@ export default function Navbar() {
       );
     }
 
- {/* ITEMS DE CADA ITEMS DEL NAVBAR */}
     const isOpen = openDropdown === item.label;
     return (
       <>
@@ -189,7 +187,6 @@ export default function Navbar() {
       );
     }
 
- {/* ITEMS DE CADA ITEMS DEL NAVBAR */}
     const isOpen = openDropdown === item.label;
     return (
       <>
@@ -201,7 +198,6 @@ export default function Navbar() {
           <Chevron open={isOpen} />
         </button>
 
- {/* ITEMS DE CADA ITEMS DEL NAVBAR MOVIL */}
         {isOpen && (
           <div className="bg-gray-50 border-t border-gray-100">
             {item.dropdown!.map((sub) => (
@@ -220,17 +216,14 @@ export default function Navbar() {
     );
   }
 
-
   return (
-    <nav className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
-      <div className="container-main" ref={dropdownRef}>
+    <nav ref={navRef} className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+      <div className="container-main">
 
-        
- {/* BARRA PRINCIPAL */}
+        {/* BARRA PRINCIPAL */}
         <div className="flex items-center justify-between h-14">
 
-
- {/* ITEMS ESCRITORIO */}
+          {/* ITEMS ESCRITORIO */}
           <ul className="hidden lg:flex items-center h-full gap-2.5">
             {NAV_ITEMS.map((item) => (
               <li key={item.label} className="relative h-full flex items-center">
@@ -239,22 +232,23 @@ export default function Navbar() {
             ))}
           </ul>
 
-
- {/* BUSCADOR - ESCRITORIO */}
+          {/* BUSCADOR - ESCRITORIO */}
           <SearchBar className="hidden lg:flex py-1.5" inputClass="w-50" />
 
-
- {/* HAMBURGUESA MOVIL */}
+          {/* HAMBURGUESA MOVIL - texto Menu a la izquierda, icono a la derecha */}
           <button
-            className="lg:hidden ml-auto p-2 text-[#1a3a5c] hover:bg-gray-500 rounded-xl transition-colors"
+            className="lg:hidden ml-auto flex items-center gap-2 p-2 text-[#1a3a5c] hover:bg-gray-100 rounded-xl transition-colors"
             onClick={() => setMobileOpen((prev) => !prev)}
             aria-label="Menu"
           >
+            <span className="text-sm font-semibold">
+              {mobileOpen ? "Cerrar" : "Menu"}
+            </span>
             {mobileOpen ? <X size={32} /> : <Menu size={32} />}
           </button>
         </div>
 
- {/* MENU MOVIL */}
+        {/* MENU MOVIL */}
         {mobileOpen && (
           <div className="lg:hidden bg-white border-t border-gray-100 py-4 pb-4">
 
