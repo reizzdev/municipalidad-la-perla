@@ -1,19 +1,25 @@
+# ─── Dependencies ─────────────────────────────────────────────────────────────
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
 # ─── Next.js ──────────────────────────────────────────────────────────────────
 frontend/.next/
 frontend/out/
 frontend/.vercel/
 frontend/next-env.d.ts
 
-# ─── Dependencies ─────────────────────────────────────────────────────────────
-frontend/node_modules/
-backend/node_modules/
+# ─── NestJS build ─────────────────────────────────────────────────────────────
+backend/dist/
+backend/build/
+
+# ─── Prisma ───────────────────────────────────────────────────────────────────
+backend/prisma/*.db
+backend/prisma/*.db-journal
 
 # ─── Variables de entorno ─────────────────────────────────────────────────────
 .env
 .env.local
-.env.development
-.env.production
-.env.test
 .env*.local
 frontend/.env
 frontend/.env.local
@@ -21,14 +27,6 @@ frontend/.env*.local
 backend/.env
 backend/.env.local
 backend/.env*.local
-
-# ─── NestJS build (a futuro) ──────────────────────────────────────────────────
-backend/dist/
-backend/build/
-
-# ─── Prisma (a futuro) ────────────────────────────────────────────────────────
-backend/prisma/*.db
-backend/prisma/*.db-journal
 
 # ─── Logs ─────────────────────────────────────────────────────────────────────
 *.log

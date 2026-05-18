@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="bg-white border-b border-gray-100 py-3 overflow-hidden">
+    <header className="border-b border-gray-100 py-3 overflow-hidden">
       <div className="container-main flex items-center justify-between gap-2">
 
         {/* LOGO DE LA MUNICIPALIDAD DE LA PERLA */}
@@ -37,6 +37,9 @@ export default function Header() {
             className="object-contain max-w-[70px] sm:max-w-[100px] h-auto"
           />
           </Link>
+
+          |
+
           <Link href="https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=10940">
           <Image
             src="/images/logoTransparencia.png"

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Search, Menu, X, ChevronDown } from "lucide-react";
+import SocialLinks from "@/components/ui/SocialLinks";
 
  {/* TIPOS */}
 
@@ -24,14 +25,14 @@ type NavItem = {
 const NAV_ITEMS: NavItem[] = [
   { label: "Inicio",       action: "page",     href: "/"            },
   { label: "Ciudad",       action: "page",     href: "/ciudad"      },
-  { label: "Noticias",     action: "scroll",   scrollTarget: "noticias" },
+  { label: "Noticias",     action: "page",   href: "/noticias" },
   {
     label: "Servicios",
     action: "dropdown",
     dropdown: [
       { label: "Tramites",            href: "https://www.gob.pe/institucion/munilaperla/tramites-y-servicios" },
       { label: "Registro de Visitas", href: "https://munilaperla.gob.pe/visitas.php" },
-      { label: "Bolsa de Trabajo",    href: "https://munilaperla.gob.pe/convocatorias-mdlp.html#" },
+      { label: "Convocatorias CAS",    href: "/convocatorias" },
     ],
   },
   { label: "Autoridades",  action: "page",     href: "https://www.gob.pe/institucion/munilaperla/funcionarios" },
@@ -39,12 +40,17 @@ const NAV_ITEMS: NavItem[] = [
     label: "Publicaciones",
     action: "dropdown",
     dropdown: [
-      { label: "Ordenanzas",    href: "#" },
-      { label: "Resoluciones",  href: "https://www.gob.pe/institucion/munilaperla/colecciones/14603-resoluciones-de-alcaldia" },
-      { label: "Decretos",      href: "#" },
+      { label: "Ordenanzas municipales",    href: "https://www.gob.pe/institucion/munilaperla/colecciones/91863-ordenanzas-municipales-2026" },
+      { label: "Resoluciones de alcaldia",  href: "https://www.gob.pe/institucion/munilaperla/colecciones/14603-resoluciones-de-alcaldia" },
+      { label: "Resoluciones de gerencia",  href: "https://www.gob.pe/institucion/munilaperla/colecciones/14608-resoluciones-de-gerencia" },
+      { label: "Resoluciones de la oficina general",  href: "https://www.gob.pe/institucion/munisullana/colecciones/5810-resoluciones-de-la-oficina-general-de-administracion-y-finanzas-mps" },
+      { label: "Decretos de alcaldia",      href: "https://www.gob.pe/institucion/munilaperla/colecciones/94642-decretos-de-alcaldia-2026" },
+      { label: "Acuerdos de concejo",      href: "https://www.gob.pe/institucion/munilaperla/colecciones/91253-acuerdos-de-concejo-2026" },
+      { label: "Directivas",      href: "https://www.gob.pe/institucion/munilaperla/colecciones/86014-directivas-lineamientos-normas-y-procedimientos-2025" },
     ],
   },
   { label: "Contacto", action: "scroll", scrollTarget: "contacto" },
+
 ];
 
  {/* CLASES REUTILIZABLES */}
@@ -144,7 +150,7 @@ export default function Navbar() {
         </button>
 
         {isOpen && (
-          <div className="absolute top-full left-0 mt-1.5 bg-white rounded-xl shadow-xl border border-gray-100 min-w-48 py-1 z-50 overflow-hidden">
+          <div className="absolute top-full left-0 mt-1.5 bg-white rounded-xl shadow-xl border border-gray-100 min-w-58 py-1 z-50 overflow-hidden">
             {item.dropdown!.map((sub) => (
               <Link
                 key={sub.label}
@@ -232,8 +238,10 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* BUSCADOR - ESCRITORIO */}
+          {/* BUSCADOR - ESCRITORIO
           <SearchBar className="hidden lg:flex py-1.5" inputClass="w-50" />
+ */}
+          <SocialLinks />
 
           {/* HAMBURGUESA MOVIL - texto Menu a la izquierda, icono a la derecha */}
           <button
@@ -268,3 +276,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

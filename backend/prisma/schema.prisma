@@ -1,0 +1,300 @@
+// ============================================================
+// schema.prisma — Sistema de Préstamo de Equipos
+// Municipalidad — /calendario
+// Stack: NestJS + Next.js + Prisma + PostgreSQL
+// ============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Permission {
+  id    String @id @default(cuid())
+  name  String @unique
+  areas Area[]
+}
+
+
+model Area {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  name         String
+  abbreviation String   @unique
+  color        String
+  role         Role     @default(AREA)
+  
+
+  permissions Permission[]
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  responsibles Responsible[]
+  reservations Reservation[]
+  logs         ReservationLog[]
+
+  incidences   Incidence[]  
+
+  @@map("areas")
+}
+
+model Responsible {
+  id        String   @id @default(cuid())
+  name      String
+  areaId    String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  area         Area          @relation(fields: [areaId], references: [id])
+  reservations Reservation[]
+
+  @@map("responsibles")
+}
+
+model Equipment {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  isAvailable Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  reservationEquipments ReservationEquipment[]
+
+  incidences  IncidenceEquipment[] 
+
+  @@map("equipments")
+}
+
+model Room {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  floor     String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  reservations Reservation[]
+
+  @@map("rooms")
+}
+
+model Reservation {
+  id              String  @id @default(cuid())
+  areaId          String
+  responsibleName String? // 🔥 SOLO TEXTO
+  roomId          String?
+
+  startTime   DateTime
+  endTime     DateTime
+  returnStart DateTime
+  returnEnd   DateTime
+
+  status   ReservationStatus @default(LOCKING)
+  lockedBy String?
+  lockedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  area                  Area                   @relation(fields: [areaId], references: [id])
+  room                  Room?                  @relation(fields: [roomId], references: [id])
+  reservationEquipments ReservationEquipment[]
+  logs                  ReservationLog[]
+  responsible           Responsible?           @relation(fields: [responsibleId], references: [id])
+  responsibleId         String?
+
+  @@map("reservations")
+}
+
+model ReservationEquipment {
+  id            String @id @default(cuid())
+  reservationId String
+  equipmentId   String
+
+  reservation Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  equipment   Equipment   @relation(fields: [equipmentId], references: [id])
+
+  @@unique([reservationId, equipmentId])
+  @@map("reservation_equipments")
+}
+
+model ReservationLog {
+  id            String    @id @default(cuid())
+  reservationId String
+  areaId        String
+  action        LogAction
+  description   String
+  createdAt     DateTime  @default(now())
+
+  reservation Reservation @relation(fields: [reservationId], references: [id])
+  area        Area        @relation(fields: [areaId], references: [id])
+
+  @@map("reservation_logs")
+}
+
+model WebsiteImage {
+  id        String   @id @default(cuid())
+  section   String   // "hero", "convocatorias", etc
+  imageUrl  String
+  altText   String
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("website_images")
+}
+
+
+
+
+
+
+
+model Convocatoria {
+  id          String                  @id @default(cuid())
+  title       String
+  description String
+  publishedAt DateTime                @default(now())
+  createdAt   DateTime                @default(now())
+  updatedAt   DateTime                @updatedAt
+  documentos  ConvocatoriaDocumento[]
+
+  @@map("convocatorias")
+}
+
+model ConvocatoriaDocumento {
+  id             String       @id @default(cuid())
+  convocatoriaId String
+  section        String
+  fileName       String
+  fileMimeType   String
+  fileSize       Int
+  fileData       Bytes
+  createdAt      DateTime     @default(now())
+  convocatoria   Convocatoria @relation(fields: [convocatoriaId], references: [id], onDelete: Cascade)
+
+  @@map("convocatoria_documentos")
+}
+
+
+
+
+
+
+model Noticia {
+  id          String          @id @default(cuid())
+  titulo      String
+  descripcion String
+  categoria   String
+  logoName    String?
+  logoMimeType String?
+  logoSize    Int?
+  logoData    Bytes?
+  fecha       DateTime        @default(now())
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  imagenes    NoticiaImagen[]
+  destacada Boolean @default(false)
+
+  @@map("noticias")
+}
+
+model NoticiaImagen {
+  id          String   @id @default(cuid())
+  noticiaId   String
+  fileName    String
+  fileMimeType String
+  fileSize    Int
+  fileData    Bytes
+  createdAt   DateTime @default(now())
+
+  noticia     Noticia  @relation(fields: [noticiaId], references: [id], onDelete: Cascade)
+
+  @@map("noticia_imagenes")
+}
+
+
+
+
+
+
+enum ReservationStatus {
+  LOCKING
+  CONFIRMED
+  RETURNED
+  CANCELLED
+}
+
+enum LogAction {
+  RESERVATION
+  RETURN
+  CANCELLATION
+}
+
+enum Role {
+  AREA
+  ADMIN
+}
+
+
+
+
+
+
+
+
+
+
+model Incidence {
+  id              String         @id @default(cuid())
+  type            IncidenceType
+  areaId          String
+  responsibleName String
+  createdAt       DateTime       @default(now())
+
+  area        Area                @relation(fields: [areaId], references: [id])
+  equipments  IncidenceEquipment[]
+
+  logs        IncidenceLog[] 
+
+  @@map("incidences")
+}
+
+model IncidenceEquipment {
+  id          String   @id @default(cuid())
+  incidenceId String
+  equipmentId String
+
+  incidence Incidence @relation(fields: [incidenceId], references: [id], onDelete: Cascade)
+  equipment Equipment @relation(fields: [equipmentId], references: [id])
+
+  @@unique([incidenceId, equipmentId])
+  @@map("incidence_equipments")
+}
+
+enum IncidenceType {
+  TARDANZA
+  MALOGRADO
+}
+
+model IncidenceLog {
+  id           String   @id @default(cuid())
+  incidenceId  String
+  action       String
+  description  String
+  createdAt    DateTime @default(now())
+
+  incidence Incidence @relation(fields: [incidenceId], references: [id], onDelete: Cascade)
+
+  @@map("incidence_logs")
+}

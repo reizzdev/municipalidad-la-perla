@@ -8,6 +8,7 @@ import ServicesGrid from "@/components/sections/ServicesGrid";
 import NewsSection from "@/components/sections/NewsSection";
 import MapSection from "@/components/sections/MapSection";
 import ContactSection from "@/components/sections/ContactSection";
+import HighlightSection from "@/components/sections/alcaldeSection";
 
 export default function HomePage() {
   return (
@@ -15,18 +16,25 @@ export default function HomePage() {
       <TopBar />
       <Header />
       <Navbar />
+
       <main>
         <HeroSection />
         <NewsBox />
+
+        <HighlightSection />
+
         <ServicesGrid />
         <NewsSection />
-        <div className="z-0">
+
+         <div className="z-0">
         <MapSection />
         </div>
-        <div className="-mt-22 z-0">
+           <div className="-mt-22 z-0">
         <ContactSection />
         </div>
+
       </main>
+
       <Footer />
     </>
   );

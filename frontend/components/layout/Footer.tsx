@@ -1,6 +1,4 @@
-import Link from "next/link";
-import { Facebook, Twitter, Instagram, Youtube } from "lucide-react";
-
+import SocialLinks from "@/components/ui/SocialLinks";
 export default function Footer() {
   const year = new Date().getFullYear();
 
@@ -11,27 +9,14 @@ export default function Footer() {
           &copy; {year} Municipalidad de La Perla — Pagina principal
         </p>
 
-        {/* Social icons */}
-        <div className="flex items-center gap-3">
-          <a href="https://www.facebook.com/MunicipalidaddeLaPerla" aria-label="Facebook" className="text-white/70 hover:text-[#3dbfb8] transition-colors">
-            <Facebook size={20} />
-          </a>
-          <a href="https://x.com/MuniLaPerla" aria-label="Twitter / X" className="text-white/70 hover:text-[#3dbfb8] transition-colors">
-            <Twitter size={20} />
-          </a>
-          <a href="https://www.instagram.com/munilaperla/" aria-label="Instagram" className="text-white/70 hover:text-[#3dbfb8] transition-colors">
-            <Instagram size={20} />
-          </a>
-          <a href="https://www.youtube.com/@municipalidaddelaperla3321" aria-label="YouTube" className="text-white/70 hover:text-[#3dbfb8] transition-colors">
-            <Youtube size={20} />
-          </a>
-        </div>
+        <SocialLinks />
 
         <p className="text-white/70 text-xs">
           Desarrollado por{" "}
-          <span className="text-[#3dbfb8] font-semibold">Kevin Anthony Ch.</span>
+          <span className="text-[#3dbfb8] font-semibold">Kevin Anthony Chocca Casapino & Cesar</span>
         </p>
       </div>
     </footer>
   );
 }
+

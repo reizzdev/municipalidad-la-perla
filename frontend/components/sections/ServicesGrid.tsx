@@ -25,7 +25,7 @@ const SERVICES = [
     icon: ShieldAlert   
   },
   { label: "Pagos en Linea",                      
-    href: "#",                                    
+    href: "https://munilaperla.gob.pe/pagosenlinea-mdlp.html",                                    
     icon: CreditCard    
   },
   { label: "Folia Amazónica",             
@@ -74,7 +74,7 @@ export default function ServicesGrid() {
       <div className="flex items-center justify-between mb-10">
         <div className="flex items-center gap-4">
           <h2 className="text-3xl font-extrabold text-[#1a3a5c]">Servicios</h2>
-          <div className="hidden md:block w-40 h-[2px] bg-[#3dbfb8] opacity-30 rounded-full" />
+          <div className="hidden md:block w-40 h-[2px] bg-gradient-to-r from-[#3dbfb8] to-transparent" />
         </div>
         <Link
           href="https://www.gob.pe/munilaperla"

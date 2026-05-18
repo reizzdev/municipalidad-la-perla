@@ -23,7 +23,8 @@ button{
 }
 
 .container-main {
-  max-width: 72rem;
+  /*max-width: 72rem;*/
+  max-width: 86rem;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
