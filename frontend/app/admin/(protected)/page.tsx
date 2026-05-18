@@ -18,7 +18,7 @@ type StatCard = {
 
 type AreaReservationStat = {
   area: {
-    id: string;
+    id?: string;
     name: string;
     abbreviation: string;
     color: string;
