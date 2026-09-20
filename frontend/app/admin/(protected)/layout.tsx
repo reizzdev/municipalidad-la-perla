@@ -5,7 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import { clearSession } from "@/lib/auth";
-import { ChevronDown, LayoutDashboard, Newspaper, Calendar, AlertTriangle, ImageIcon } from "lucide-react";
+import { ChevronDown, LayoutDashboard, Newspaper, Calendar, AlertTriangle, ImageIcon, Menu, X } from "lucide-react";
 
 type Props = {
   children: ReactNode;
@@ -22,6 +22,7 @@ export default function AdminProtectedLayout({ children }: Props) {
     calendario: false,
     incidencias: false,
   });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // 🔐 Protección
   useEffect(() => {
@@ -33,6 +34,10 @@ export default function AdminProtectedLayout({ children }: Props) {
       router.replace("/");
     }
   }, [loading, area, router]);
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   const handleLogout = () => {
     clearSession();
@@ -66,7 +71,20 @@ export default function AdminProtectedLayout({ children }: Props) {
   return (
     <div className="flex min-h-screen">
       {/* SIDEBAR */}
-      <aside className="w-72 bg-gradient-to-b from-gray-900 to-gray-950 text-white p-6 flex flex-col justify-between shadow-2xl">
+      {mobileMenuOpen && (
+        <button
+          type="button"
+          aria-label="Cerrar menú"
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 transform flex-col justify-between overflow-y-auto bg-gradient-to-b from-gray-900 to-gray-950 p-6 text-white shadow-2xl transition-transform duration-200 lg:static lg:z-auto lg:translate-x-0 lg:overflow-visible ${
+          mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         <div>
           <h2 className="text-xl font-bold mb-6 tracking-wide">
             Panel Admin
@@ -271,7 +289,28 @@ export default function AdminProtectedLayout({ children }: Props) {
       </aside>
 
       {/* CONTENIDO */}
-      <main className="flex-1 p-10 bg-gray-100">{children}</main>
+      <main className="min-w-0 flex-1 bg-gray-100 p-4 pt-20 lg:p-10">
+        <header className="fixed inset-x-0 top-0 z-30 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 shadow-sm lg:hidden">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wide text-gray-500">
+              Panel administrativo
+            </p>
+            <p className="truncate text-sm font-semibold text-gray-900">
+              {area.abbreviation}
+            </p>
+          </div>
+          <button
+            type="button"
+            aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={mobileMenuOpen}
+            className="rounded-lg p-2 text-gray-700 transition-colors hover:bg-gray-100"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </header>
+        {children}
+      </main>
     </div>
   );
 }
