@@ -1,10 +1,4 @@
-import TopBar from "@/components/layout/TopBar";
-import Header from "@/components/layout/Header";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import Breadcrumb from "@/components/ui/Breadcrumb";
 import CalendarView from "@/components/calendario/CalendarView";
-import LoginPanel from "@/components/calendario/LoginPanel";
 
 export default function CalendarioPage() {
   return (

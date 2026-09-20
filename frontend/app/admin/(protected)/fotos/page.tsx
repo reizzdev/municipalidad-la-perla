@@ -119,6 +119,7 @@ export default function AdminFotosPage() {
           >
             <img
               src={img.imageUrl}
+              alt=""
               className="h-44 w-full object-cover"
             />
 

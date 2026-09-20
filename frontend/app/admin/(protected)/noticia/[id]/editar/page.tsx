@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { API_URL } from '@/lib/api';
 
 type Noticia = {
   id: string;
@@ -30,7 +29,7 @@ const id = Array.isArray(params.id) ? params.id[0] : params.id;
  useEffect(() => {
   if (!id) return;
 
- fetch(`${API_URL}/api/noticias/${id}`)
+fetch(`http://localhost:4000/api/noticias/${id}`)
     .then((res) => {
       if (!res.ok) throw new Error('Noticia no encontrada');
       return res.json();
@@ -45,15 +44,6 @@ const id = Array.isArray(params.id) ? params.id[0] : params.id;
       setNoticia(null);
     });
 }, [params.id]);
-
-  function fileToBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = reject;
-    });
-  }
 
  async function handleSubmit(e: React.FormEvent) {
   e.preventDefault();
@@ -90,7 +80,7 @@ const id = Array.isArray(params.id) ? params.id[0] : params.id;
     });
 
     const res = await fetch(
-      `${API_URL}/api/noticias/${noticia.id}`,
+      `http://localhost:4000/api/noticias/${noticia.id}`,
       {
         method: 'PUT',
         headers: {

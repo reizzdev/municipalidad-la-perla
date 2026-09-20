@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { API_URL } from "@/lib/api";
 
 type Noticia = {
   id: string;
@@ -18,7 +17,7 @@ export default function NewsSection() {
   const [loading, setLoading] = useState(true);
 
 useEffect(() => {
-  fetch(`${API_URL}/api/noticias`)
+  fetch("http://localhost:4000/api/noticias")
     .then((res) => res.json())
     .then((data: Noticia[]) => {
       // Primero las destacadas, luego el resto, y toma solo 3
@@ -73,7 +72,7 @@ useEffect(() => {
               {/* Imagen */}
               <div className="relative h-60 rounded-xl overflow-hidden">
                 <img
-                  src={`${API_URL}/api/noticias/${noticia.id}/logo`}
+                  src={`http://localhost:4000/api/noticias/${noticia.id}/logo`}
                   alt={noticia.titulo}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />

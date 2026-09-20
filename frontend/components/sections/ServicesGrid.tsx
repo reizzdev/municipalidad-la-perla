@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, FileText, BookOpen, Search, MessageSquare, ShieldAlert, CreditCard, HeartPulse, PawPrint, ClipboardList } from "lucide-react";
+import { ArrowRight, FileText, BookOpen, Search, MessageSquare, ShieldAlert, CreditCard, PawPrint, ClipboardList } from "lucide-react";
 
 // ─── Datos ────────────────────────────────────────────────────────────────────
 

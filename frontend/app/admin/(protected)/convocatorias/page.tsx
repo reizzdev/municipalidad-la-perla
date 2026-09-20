@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import Footer from "@/components/layout/Footer";
-import { API_URL } from "@/lib/api";
 
 type Documento = {
   id: string;
@@ -31,7 +30,7 @@ export default function ConvocatoriasPage() {
   const [year, setYear] = useState("");
 
   useEffect(() => {
-    fetch(`${API_URL}/api/convocatorias`)
+    fetch("http://localhost:4000/api/convocatorias")
       .then((res) => res.json())
       .then((data) => setItems(data))
       .finally(() => setLoading(false));

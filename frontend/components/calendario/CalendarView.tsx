@@ -174,7 +174,7 @@ export default function CalendarView() {
   );
 
   // ─── selección de celdas → lock ─────────────────────────
- const handleSlotSelect = useCallback(
+  const handleSlotSelect = useCallback(
   async (start: Date, end: Date) => {
     if (!currentArea || !token) return;
 

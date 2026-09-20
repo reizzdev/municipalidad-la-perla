@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { getSession } from '@/lib/auth';
-import { API_URL } from '@/lib/api';
 
 type Noticia = {
   id: string;
@@ -28,7 +27,7 @@ const id = Array.isArray(params.id) ? params.id[0] : params.id;
   useEffect(() => {
     if (!id) return;
 
-  fetch(`${API_URL}/api/noticias/${id}`)
+fetch(`http://localhost:4000/api/noticias/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error('Noticia no encontrada');
         return res.json();
@@ -50,7 +49,7 @@ const id = Array.isArray(params.id) ? params.id[0] : params.id;
     }
 
     const res = await fetch(
-      `${API_URL}/api/noticias/${noticia.id}`,
+      `http://localhost:4000/api/noticias/${noticia.id}`,
       {
         method: 'DELETE',
         headers: {
@@ -105,7 +104,7 @@ const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
         {/* LOGO */}
         <img
-          src={`${API_URL}/api/noticias/${noticia.id}/logo`}
+          src={`http://localhost:4000/api/noticias/${noticia.id}/logo`}
           className="mt-6 w-full object-cover rounded-xl"
         />
 
@@ -124,7 +123,7 @@ const id = Array.isArray(params.id) ? params.id[0] : params.id;
           {noticia.imagenes.map((img) => (
             <img
               key={img.id}
-              src={`${API_URL}/api/noticias/imagenes/${img.id}`}
+              src={`http://localhost:4000/api/noticias/imagenes/${img.id}`}
               className="w-full h-32 object-cover rounded-lg"
             />
           ))}

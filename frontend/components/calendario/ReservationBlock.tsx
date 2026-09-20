@@ -30,7 +30,6 @@ export default function ReservationBlock({
   reservations,
   currentAreaId,
   onCancel,
-  blockHeight,
   onBringToFront,
   newestId,
 }: Props) {

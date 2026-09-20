@@ -224,7 +224,6 @@ export default function WeekView({
                   const resStarts = getReservationStartsAt(dayIdx, slotIdx);
                   const lockStarts = getLockStartsAt(dayIdx, slotIdx);
                   const locksHere = getLocksAt(dayIdx, slotIdx);
-                  const resHere = getReservationsAt(dayIdx, slotIdx);
 
                   const hasOtherLock = locksHere.some(
                     (lk) => lk.area.id !== currentArea?.id,

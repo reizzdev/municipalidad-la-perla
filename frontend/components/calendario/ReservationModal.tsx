@@ -71,7 +71,6 @@ export default function ReservationModal({
   reservationId,
   startTime,
   endTime,
-  returnEnd,
   area,
   availableEquipments,
   onConfirm,
@@ -86,17 +85,14 @@ export default function ReservationModal({
   const [selectedRoom, setSelectedRoom] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [loaded, setLoaded] = useState(false);
-
   // Cargar responsables y salas una vez
   useState(() => {
     Promise.all([
       api.get<Responsible[]>(`/api/areas/${area.id}/responsibles`),
       api.get<Room[]>('/api/areas/rooms/all'),
-    ]).then(([resp, rm]) => {
+    ]).then(([, rm]) => {
       //setResponsibles(resp.data);
       setRooms(rm.data);
-      setLoaded(true);
     });
   });
 
