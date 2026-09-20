@@ -148,8 +148,8 @@ const [date, setDate] = useState(getToday());
       }
 
       router.push('/admin/convocatorias');
-    } catch (err: any) {
-      setMessage(err.message || 'Ocurrió un error');
+    } catch (err: unknown) {
+      setMessage(err instanceof Error ? err.message : 'Ocurrió un error');
     } finally {
       setLoading(false);
     }

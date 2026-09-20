@@ -7,7 +7,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Validación automática de DTOs
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
 
   // WebSockets
   app.useWebSocketAdapter(new IoAdapter(app));
@@ -20,6 +26,9 @@ async function bootstrap() {
 
   // Prefijo global de la API
   app.setGlobalPrefix('api');
+
+  console.log('PORT=', process.env.PORT);
+console.log('DATABASE_URL=', !!process.env.DATABASE_URL);
 
   await app.listen(process.env.PORT || 4000);
   console.log(`🚀 Backend corriendo en http://localhost:${process.env.PORT || 4000}`);

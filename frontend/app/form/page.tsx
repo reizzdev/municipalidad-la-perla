@@ -121,8 +121,8 @@ export default function ConvocatoriaCASForm() {
         if (ref.current) ref.current.value = '';
       });
 
-    } catch (err: any) {
-      setMessage(err.message || 'Ocurrió un error');
+    } catch (err: unknown) {
+      setMessage(err instanceof Error ? err.message : 'Ocurrió un error');
     } finally {
       setLoading(false);
     }

@@ -22,8 +22,8 @@ export class ReservationsService {
   async findByRange(start: string, end: string) {
     const reservations = await this.prisma.reservation.findMany({
       where: {
-        startTime: { gte: new Date(start) },
-        endTime: { lte: new Date(end) },
+        startTime: { lt: new Date(end) },
+        endTime: { gt: new Date(start) },
         status: { in: [ReservationStatus.CONFIRMED, ReservationStatus.LOCKING] },
       },
       include: {

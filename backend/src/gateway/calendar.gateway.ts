@@ -160,6 +160,9 @@ export class CalendarGateway implements OnGatewayConnection, OnGatewayDisconnect
     @ConnectedSocket() client: Socket,
     @MessageBody() data: { reservationId: string },
   ): void {
+    const ownerSocketId = this.activeLocks.get(data.reservationId);
+    if (ownerSocketId !== client.id) return;
+
     this.activeLocks.delete(data.reservationId);
     this.server.emit('lock:released', { reservationId: data.reservationId });
   }

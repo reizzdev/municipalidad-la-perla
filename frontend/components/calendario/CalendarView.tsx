@@ -154,6 +154,25 @@ export default function CalendarView() {
     }, [fetchReservations]),
   });
 
+  // ─── cancelar modal / lock ───────────────────────────────
+  const handleModalCancel = useCallback(
+    async (reservationId?: string) => {
+      const id = reservationId ?? modal?.reservationId;
+      if (!id) return;
+
+      clearInterval(timerRef.current!);
+      setModal(null);
+
+      try {
+        await api.delete(`/api/reservations/lock/${id}`);
+        emit('lock:release', { reservationId: id });
+      } catch {
+        // lock ya expiró o no existe, ignorar
+      }
+    },
+    [modal, emit],
+  );
+
   // ─── selección de celdas → lock ─────────────────────────
  const handleSlotSelect = useCallback(
   async (start: Date, end: Date) => {
@@ -205,27 +224,8 @@ export default function CalendarView() {
       alert(msg);
     }
   },
-  [currentArea, token, emit],
+  [currentArea, token, emit, handleModalCancel],
 );
-
-  // ─── cancelar modal / lock ───────────────────────────────
-  const handleModalCancel = useCallback(
-    async (reservationId?: string) => {
-      const id = reservationId ?? modal?.reservationId;
-      if (!id) return;
-
-      clearInterval(timerRef.current!);
-      setModal(null);
-
-      try {
-        await api.delete(`/api/reservations/lock/${id}`);
-        emit('lock:release', { reservationId: id });
-      } catch {
-        // lock ya expiró o no existe, ignorar
-      }
-    },
-    [modal, emit],
-  );
 
   // ─── confirmar reserva ───────────────────────────────────
   const handleConfirm = useCallback(

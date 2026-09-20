@@ -35,7 +35,7 @@ findByRange(
   // POST /api/reservations/lock  — requiere login
   // Bloquea las celdas seleccionadas por 5 minutos
   @Permissions('CALENDARIO_CRUD')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Post('lock')
   lockSlots(@Body() dto: LockSlotsDto, @Request() req) {
     return this.reservationsService.lockSlots(dto, req.user.id);
@@ -44,7 +44,7 @@ findByRange(
   // POST /api/reservations/confirm  — requiere login
   // Confirma la reserva con datos del modal
   @Permissions('CALENDARIO_CRUD')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Post('confirm')
   confirmReservation(@Body() dto: ConfirmReservationDto, @Request() req) {
     return this.reservationsService.confirmReservation(dto, req.user.id);
@@ -53,7 +53,7 @@ findByRange(
   // POST /api/reservations/cancel  — requiere login
   // Cancela reserva futura
   @Permissions('CALENDARIO_CRUD')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Post('cancel')
   cancelReservation(@Body() dto: CancelReservationDto, @Request() req) {
     return this.reservationsService.cancelReservation(dto, req.user.id);
@@ -62,7 +62,7 @@ findByRange(
   // DELETE /api/reservations/lock/:id  — requiere login
   // Libera un lock (usuario canceló el modal)
   @Permissions('CALENDARIO_CRUD')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Delete('lock/:id')
   releaseLock(@Param('id') id: string, @Request() req) {
     return this.reservationsService.releaseLock(id, req.user.id);
@@ -82,7 +82,7 @@ async getAvailableEquipments(
 // GET /api/reservations/logs
 // Obtiene todos los logs de reservas
 @Permissions('CALENDARIO_CRUD')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, PermissionsGuard)
 @Get('logs')
 getReservationLogs() {
   return this.reservationsService.getReservationLogs();

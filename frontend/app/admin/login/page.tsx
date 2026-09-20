@@ -27,8 +27,8 @@ export default function AdminLoginPage() {
       }
 
       router.push("/admin");
-    } catch (err: any) {
-      setError(err.message || "Credenciales incorrectas");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Credenciales incorrectas");
     } finally {
       setLoading(false);
     }

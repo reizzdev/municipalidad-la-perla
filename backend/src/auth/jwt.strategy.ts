@@ -1,16 +1,25 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private prisma: PrismaService) {
+  constructor(
+    private prisma: PrismaService,
+    config: ConfigService,
+  ) {
+    const secret = config.get<string>('JWT_SECRET');
+    if (!secret) {
+      throw new Error('JWT_SECRET es obligatorio para iniciar el backend');
+    }
+
     super({
       // Token viene en el header Authorization: Bearer <token>
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET || 'municipalidad-secret-key',
+      secretOrKey: secret,
     });
   }
 
@@ -24,6 +33,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 }) {
     const area = await this.prisma.area.findUnique({
       where: { id: payload.sub },
+      include: { permissions: true },
     });
 
     if (!area || !area.isActive) {
@@ -37,7 +47,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       color: area.color,
       name: area.name,
       role: area.role,
-      permissions: payload.permissions || [],
+      permissions: area.permissions.map((permission) => permission.name),
     };
   }
 }

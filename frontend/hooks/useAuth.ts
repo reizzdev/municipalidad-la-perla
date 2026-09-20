@@ -14,19 +14,19 @@ export function useAuth() {
   }, []);
 
   async function login(username: string, password: string): Promise<AreaSession> {
-    try{
     const res = await api.post<{ access_token: string; area: AreaSession }>(
       'api/auth/login',
       { username, password },
     );
-    console.log("LOGIN AREA:", res.data.area);
+
+    if (res.data.area.role !== 'ADMIN') {
+      throw new Error('No tienes acceso al panel admin');
+    }
+
     saveSession(res.data.access_token, res.data.area);
     setArea(res.data.area);
 
-     return res.data.area;
-  } catch (error) {
-    throw error; // 👈 importante
-  }
+    return res.data.area;
   }
 
   function logout() {
