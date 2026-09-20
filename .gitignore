@@ -32,7 +32,6 @@ backend/.env*.local
 *.log
 npm-debug.log*
 yarn-error.log*
-logs/
 
 # ─── Cache ────────────────────────────────────────────────────────────────────
 .cache/
