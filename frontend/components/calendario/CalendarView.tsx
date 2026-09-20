@@ -302,7 +302,7 @@ export default function CalendarView() {
       {/* Aviso si no hay sesión */}
       {!currentArea && (
         <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-sm text-[#1a3a5c] font-medium">
-          👁 Estás en modo <strong>solo lectura</strong>. Inicia sesión para crear reservas.
+          Estás en modo <strong>solo lectura</strong>. Inicia sesión para crear reservas.
         </div>
       )}
 

@@ -22,26 +22,26 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { PermissionsGuard } from '../auth/permissions.guard';
 import { Permissions } from '../auth/permissions.decorator';
 
-// ✅ CORREGIDO (SIN /api)
+// CORREGIDO (SIN /api)
 
 
 @Controller('noticias')
 export class NoticiasController {
   constructor(private readonly service: NoticiasService) {}
 
-  // 🟢 PUBLICO
+  //  PUBLICO
   @Get()
   findAll() {
     return this.service.findAll();
   }
 
-  // 🟢 PUBLICO
+  // PUBLICO
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.service.findOne(id);
   }
 
-  // 🔒 SOLO CRUD
+  //  SOLO CRUD
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions('NOTICIAS_CRUD')
   @Post()
@@ -69,7 +69,7 @@ export class NoticiasController {
     });
   }
 
-  // 🔒
+  //
 @UseGuards(JwtAuthGuard, PermissionsGuard)
 @Permissions('NOTICIAS_CRUD')
 @Put(':id')
@@ -96,7 +96,7 @@ update(
   });
 }
 
-  // 🔒
+  //
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions('NOTICIAS_CRUD')
   @Delete(':id')
@@ -104,7 +104,7 @@ update(
     return this.service.delete(id);
   }
 
-  // 🟢 PUBLICO (si quieres que el frontend muestre imagen sin login)
+  // PUBLICO (si quieres que el frontend muestre imagen sin login)
   @Get(':id/logo')
   async getLogo(@Param('id') id: string, @Res() res: Response) {
     const noticia = await this.service.getLogo(id);
@@ -117,7 +117,7 @@ update(
     res.send(Buffer.from(noticia.logoData!));
   }
 
-  // 🟢 PUBLICO
+  // PUBLICO
   @Get('imagenes/:id')
   async getImagen(@Param('id') id: string, @Res() res: Response) {
     const imagen = await this.service.getImagen(id);

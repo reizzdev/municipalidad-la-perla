@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🌱 Iniciando seed...');
+  console.log('Iniciando seed...');
 
   // ----------------------------------------------------------
   // ÁREAS (usuarios del sistema)
@@ -174,7 +174,7 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error('❌ Error en seed:', e);
+    console.error('Error en seed:', e);
     process.exit(1);
   })
   .finally(async () => {

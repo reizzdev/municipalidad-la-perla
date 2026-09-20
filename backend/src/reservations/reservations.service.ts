@@ -91,7 +91,7 @@ async confirmReservation(dto: ConfirmReservationDto, areaId: string) {
     throw new ForbiddenException('No tienes permiso para confirmar esta reserva');
   }
 
-  // 🔥 Verificar expiración del lock
+  // Verificar expiración del lock
   if (reservation.lockedAt) {
     const lockAge = (Date.now() - reservation.lockedAt.getTime()) / 1000 / 60;
     if (lockAge > LOCK_TIMEOUT_MINUTES) {
@@ -102,7 +102,7 @@ async confirmReservation(dto: ConfirmReservationDto, areaId: string) {
     }
   }
 
-  // 🔥 Verificar que los equipos seleccionados sigan libres
+  // Verificar que los equipos seleccionados sigan libres
   const overlappingReservations = await this.prisma.reservation.findMany({
     where: {
       status: ReservationStatus.CONFIRMED,
@@ -130,7 +130,7 @@ const conflictEquipment = dto.equipmentIds.find(eqId =>
     );
   }
 
-  // 🔥 Confirmar
+  //  Confirmar
   const confirmed = await this.prisma.reservation.update({
     where: { id: dto.reservationId },
     data: {

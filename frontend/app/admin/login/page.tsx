@@ -21,7 +21,7 @@ export default function AdminLoginPage() {
     try {
       const result = await login(username, password);
 
-      // 🔥 IMPORTANTE: validar role
+      // IMPORTANTE: validar role
       if (result.role !== "ADMIN") {
         throw new Error("No tienes acceso al panel admin");
       }

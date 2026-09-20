@@ -90,7 +90,7 @@ model Room {
 model Reservation {
   id              String  @id @default(cuid())
   areaId          String
-  responsibleName String? // 🔥 SOLO TEXTO
+  responsibleName String? // SOLO TEXTO
   roomId          String?
 
   startTime   DateTime

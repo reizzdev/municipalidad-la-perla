@@ -25,7 +25,7 @@ export function useAuth() {
 
      return res.data.area;
   } catch (error) {
-    throw error; // 👈 importante
+    throw error; //  importante
   }
   }
 

@@ -61,7 +61,7 @@ export default function ReservationBlock({
   const activeHeight =
     slotsCount(active.startTime, active.endTime) * SLOT_HEIGHT - 1;
 
-  // ✅ FUNCIÓN CORRECTA PARA FORMATEAR HORA
+  //  FUNCIÓN CORRECTA PARA FORMATEAR HORA
   const formatHora = (fecha: string | Date) =>
     new Date(fecha).toLocaleTimeString("es-PE", {
       hour: "2-digit",
@@ -78,7 +78,7 @@ export default function ReservationBlock({
         active.equipments?.join(", ") ||
         "";
 
-      // ✅ HORAS CORRECTAS (AQUÍ ESTABA EL ERROR)
+      // HORAS CORRECTAS (AQUÍ ESTABA EL ERROR)
       const horasCorrectas = `${formatHora(
         active.startTime
       )} - ${formatHora(active.endTime)}`;
@@ -93,7 +93,7 @@ export default function ReservationBlock({
           responsable: responsibleName,
           equipos,
           fecha: active.startTime.split("T")[0],
-          horas: horasCorrectas, // 👈 FIX AQUÍ
+          horas: horasCorrectas, //  FIX AQUÍ
           lugar: roomName,
         }),
       });

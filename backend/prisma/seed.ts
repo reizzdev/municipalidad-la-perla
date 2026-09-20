@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🌱 Iniciando seed...');
+  console.log(' Iniciando seed...');
 
   // ----------------------------------------------------------
   // ÁREAS (usuarios del sistema)
@@ -191,7 +191,7 @@ const permissions = [
     });
   }
 
-  console.log('✅ Permisos creados');
+  console.log('Permisos creados');
 
 
 
@@ -206,7 +206,7 @@ const permissions = [
 
 main()
   .catch((e) => {
-    console.error('❌ Error en seed:', e);
+    console.error('Error en seed:', e);
     process.exit(1);
   })
   .finally(async () => {

@@ -10,7 +10,7 @@ import { Permissions } from "../auth/permissions.decorator";
 export class IncidenciasController {
   constructor(private readonly service: IncidenciasService) {}
 
-  // 🔒 SOLO OTI
+  // SOLO OTI
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions("INCIDENCIAS_CRUD")
   @Post()
@@ -18,7 +18,7 @@ export class IncidenciasController {
     return this.service.create(dto);
   }
 
-  // 🔒 SOLO OTI
+  // SOLO OTI
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions("INCIDENCIAS_CRUD")
   @Get()
