@@ -39,6 +39,11 @@ yarn-error.log*
 .eslintcache
 *.tsbuildinfo
 
+# Artefactos locales y archivos de respaldo
+zextras/
+backend/dist.zip
+frontend/frontend.rar
+
 # ─── Sistema operativo ────────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
