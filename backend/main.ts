@@ -19,10 +19,10 @@ async function bootstrap() {
   app.useWebSocketAdapter(new IoAdapter(app));
 
   // CORS para Next.js frontend
-  app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-    credentials: true,
-  });
+app.enableCors({
+  origin: 'https://municipalidad-la-perla-production.up.railway.app',
+  credentials: true,
+});
 
   // Prefijo global de la API
   app.setGlobalPrefix('api');
