@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
-import Footer from "@/components/layout/Footer";
 import { API_URL } from "@/lib/api";
 
 type Documento = {
@@ -166,8 +165,6 @@ export default function ConvocatoriasPage() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </>
   );
 }
