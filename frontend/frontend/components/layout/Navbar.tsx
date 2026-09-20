@@ -1,0 +1,279 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+import { Search, Menu, X, ChevronDown } from "lucide-react";
+import SocialLinks from "@/components/ui/SocialLinks";
+
+ {/* TIPOS */}
+
+type DropdownItem = {
+  label: string;
+  href: string;
+};
+
+type NavItem = {
+  label: string;
+  href?: string;
+  action: "page" | "scroll" | "dropdown";
+  scrollTarget?: string;
+  dropdown?: DropdownItem[];
+};
+
+ {/* DATOS */}
+
+const NAV_ITEMS: NavItem[] = [
+  { label: "Inicio",       action: "page",     href: "/"            },
+  { label: "Ciudad",       action: "page",     href: "/ciudad"      },
+  { label: "Noticias",     action: "page",   href: "/noticias" },
+  {
+    label: "Servicios",
+    action: "dropdown",
+    dropdown: [
+      { label: "Tramites",            href: "https://www.gob.pe/institucion/munilaperla/tramites-y-servicios" },
+      { label: "Registro de Visitas", href: "https://munilaperla.gob.pe/visitas.php" },
+      { label: "Convocatorias CAS",    href: "/convocatorias" },
+    ],
+  },
+  { label: "Autoridades",  action: "page",     href: "https://www.gob.pe/institucion/munilaperla/funcionarios" },
+  {
+    label: "Publicaciones",
+    action: "dropdown",
+    dropdown: [
+      { label: "Ordenanzas municipales",    href: "https://www.gob.pe/institucion/munilaperla/colecciones/91863-ordenanzas-municipales-2026" },
+      { label: "Resoluciones de alcaldia",  href: "https://www.gob.pe/institucion/munilaperla/colecciones/14603-resoluciones-de-alcaldia" },
+      { label: "Resoluciones de gerencia",  href: "https://www.gob.pe/institucion/munilaperla/colecciones/14608-resoluciones-de-gerencia" },
+      { label: "Resoluciones de la oficina general",  href: "https://www.gob.pe/institucion/munisullana/colecciones/5810-resoluciones-de-la-oficina-general-de-administracion-y-finanzas-mps" },
+      { label: "Decretos de alcaldia",      href: "https://www.gob.pe/institucion/munilaperla/colecciones/94642-decretos-de-alcaldia-2026" },
+      { label: "Acuerdos de concejo",      href: "https://www.gob.pe/institucion/munilaperla/colecciones/91253-acuerdos-de-concejo-2026" },
+      { label: "Directivas",      href: "https://www.gob.pe/institucion/munilaperla/colecciones/86014-directivas-lineamientos-normas-y-procedimientos-2025" },
+    ],
+  },
+  { label: "Contacto", action: "scroll", scrollTarget: "contacto" },
+
+];
+
+ {/* CLASES REUTILIZABLES */}
+
+const cls = {
+  navLink:
+    "px-3 py-1.5 text-sm font-semibold text-[#1a3a5c] rounded-md transition-all hover:bg-[#1a3a5c] hover:text-white",
+  dropdownLink:
+    "block px-4 py-2.5 text-sm font-semibold text-[#1a3a5c] transition-all hover:bg-[#1a3a5c] hover:text-white",
+  mobileLink:
+    "block px-4 py-3 text-sm font-semibold text-[#1a3a5c] hover:bg-[#1a3a5c] hover:text-white transition-all",
+  searchBox:
+    "flex items-center bg-gray-50 border border-gray-500 rounded-full px-3 gap-2 focus-within:border-[#1a3a5c] transition-colors",
+};
+
+ {/* SUBCOMPONENTES */}
+
+function SearchBar({ className, inputClass }: { className?: string; inputClass?: string }) {
+  return (
+    <div className={`${cls.searchBox} ${className ?? ""}`}>
+      <input
+        type="text"
+        placeholder="Buscar..."
+        className={`bg-transparent text-[#1a3a5c] placeholder-gray-600 text-sm outline-none ${inputClass ?? ""}`}
+      />
+      <Search size={20} className="text-gray-600 flex-shrink-0" />
+    </div>
+  );
+}
+
+function Chevron({ open }: { open: boolean }) {
+  return (
+    <ChevronDown
+      size={18}
+      className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+    />
+  );
+}
+
+ {/* COMPONENTE PRINCIPAL */}
+
+export default function Navbar() {
+  const [mobileOpen,   setMobileOpen]   = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const navRef = useRef<HTMLElement>(null);
+
+  // Cierra dropdown Y menu mobile al hacer click fuera
+  useEffect(() => {
+    function onOutsideClick(e: MouseEvent) {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setOpenDropdown(null);
+        setMobileOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", onOutsideClick);
+    return () => document.removeEventListener("mousedown", onOutsideClick);
+  }, []);
+
+  function scrollTo(target: string) {
+    document.getElementById(target)?.scrollIntoView({ behavior: "smooth" });
+    setMobileOpen(false);
+    setOpenDropdown(null);
+  }
+
+  function toggleDropdown(label: string) {
+    setOpenDropdown((prev) => (prev === label ? null : label));
+  }
+
+ {/* RENDERIZANDO CADA ITEM EN ESCRITORIO */}
+
+  function renderDesktopItem(item: NavItem) {
+    if (item.action === "page") {
+      return (
+        <Link href={item.href!} className={cls.navLink}>
+          {item.label}
+        </Link>
+      );
+    }
+
+    if (item.action === "scroll") {
+      return (
+        <button onClick={() => scrollTo(item.scrollTarget!)} className={cls.navLink}>
+          {item.label}
+        </button>
+      );
+    }
+
+    const isOpen = openDropdown === item.label;
+    return (
+      <>
+        <button
+          onClick={() => toggleDropdown(item.label)}
+          className={`${cls.navLink} flex items-center gap-1`}
+        >
+          {item.label}
+          <Chevron open={isOpen} />
+        </button>
+
+        {isOpen && (
+          <div className="absolute top-full left-0 mt-1.5 bg-white rounded-xl shadow-xl border border-gray-100 min-w-58 py-1 z-50 overflow-hidden">
+            {item.dropdown!.map((sub) => (
+              <Link
+                key={sub.label}
+                href={sub.href}
+                className={cls.dropdownLink}
+                onClick={() => setOpenDropdown(null)}
+              >
+                {sub.label}
+              </Link>
+            ))}
+          </div>
+        )}
+      </>
+    );
+  }
+
+ {/* RENDER MOVIL */}
+
+  function renderMobileItem(item: NavItem) {
+    if (item.action === "page") {
+      return (
+        <Link
+          href={item.href!}
+          className={`${cls.mobileLink} uppercase`}
+          onClick={() => setMobileOpen(false)}
+        >
+          {item.label}
+        </Link>
+      );
+    }
+
+    if (item.action === "scroll") {
+      return (
+        <button
+          onClick={() => scrollTo(item.scrollTarget!)}
+          className={`w-full text-left uppercase ${cls.mobileLink}`}
+        >
+          {item.label}
+        </button>
+      );
+    }
+
+    const isOpen = openDropdown === item.label;
+    return (
+      <>
+        <button
+          onClick={() => toggleDropdown(item.label)}
+          className={`w-full flex items-center justify-between uppercase ${cls.mobileLink}`}
+        >
+          {item.label}
+          <Chevron open={isOpen} />
+        </button>
+
+        {isOpen && (
+          <div className="bg-gray-50 border-t border-gray-100">
+            {item.dropdown!.map((sub) => (
+              <Link
+                key={sub.label}
+                href={sub.href}
+                className="block pl-8 pr-4 py-2.5 text-sm font-semibold text-[#1a3a5c] hover:bg-[#1a3a5c] hover:text-white transition-all"
+                onClick={() => { setOpenDropdown(null); setMobileOpen(false); }}
+              >
+                {"➤ "} &nbsp; {sub.label}
+              </Link>
+            ))}
+          </div>
+        )}
+      </>
+    );
+  }
+
+  return (
+    <nav ref={navRef} className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+      <div className="container-main">
+
+        {/* BARRA PRINCIPAL */}
+        <div className="flex items-center justify-between h-14">
+
+          {/* ITEMS ESCRITORIO */}
+          <ul className="hidden lg:flex items-center h-full gap-2.5">
+            {NAV_ITEMS.map((item) => (
+              <li key={item.label} className="relative h-full flex items-center">
+                {renderDesktopItem(item)}
+              </li>
+            ))}
+          </ul>
+
+          {/* BUSCADOR - ESCRITORIO
+          <SearchBar className="hidden lg:flex py-1.5" inputClass="w-50" />
+ */}
+          <SocialLinks />
+
+          {/* HAMBURGUESA MOVIL - texto Menu a la izquierda, icono a la derecha */}
+          <button
+            className="lg:hidden ml-auto flex items-center gap-2 p-2 text-[#1a3a5c] hover:bg-gray-100 rounded-xl transition-colors"
+            onClick={() => setMobileOpen((prev) => !prev)}
+            aria-label="Menu"
+          >
+            <span className="text-sm font-semibold">
+              {mobileOpen ? "Cerrar" : "Menu"}
+            </span>
+            {mobileOpen ? <X size={32} /> : <Menu size={32} />}
+          </button>
+        </div>
+
+        {/* MENU MOVIL */}
+        {mobileOpen && (
+          <div className="lg:hidden bg-white border-t border-gray-100 py-4 pb-4">
+
+            {/* BUSCADOR MOVIL */}
+            <SearchBar className="mx-2 mb-3 py-2" inputClass="flex-1" />
+
+            <ul className="flex flex-col">
+              {NAV_ITEMS.map((item) => (
+                <li key={item.label}>
+                  {renderMobileItem(item)}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+}
+
