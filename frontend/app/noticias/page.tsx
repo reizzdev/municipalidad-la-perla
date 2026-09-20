@@ -8,6 +8,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ContactSection from "@/components/sections/ContactSection";
 import Breadcrumb from "@/components/ui/Breadcrumb";
+import { API_URL } from "@/lib/api";
 
 type Noticia = {
   id: string;
@@ -23,7 +24,7 @@ export default function NoticiaPage() {
   const [noticias, setNoticias] = useState<Noticia[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/noticias")
+    fetch(`${API_URL}/api/noticias`)
       .then((res) => res.json())
       .then((data: Noticia[]) => {
         // Las destacadas siempre primero
@@ -77,7 +78,7 @@ export default function NoticiaPage() {
                       <img
                         src={
                           noticia.logoName
-                            ? `http://localhost:4000/api/noticias/${noticia.id}/logo`
+                            ? `${API_URL}/api/noticias/${noticia.id}/logo`
                             : "/noticia.jpg"
                         }
                         alt={noticia.titulo}

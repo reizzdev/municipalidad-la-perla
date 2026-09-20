@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { Pencil } from 'lucide-react';
+import { API_URL } from '@/lib/api';
 
 type Documento = {
   id: string;
@@ -50,7 +51,7 @@ const id = Array.isArray(params.id) ? params.id[0] : params.id;
   useEffect(() => {
     if (!params.id) return;
 
-    fetch(`http://localhost:4000/api/convocatorias/${params.id}`)
+    fetch(`${API_URL}/api/convocatorias/${params.id}`)
       .then((res) => {
         if (!res.ok) throw new Error('No encontrada');
         return res.json();
@@ -62,7 +63,7 @@ const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
   function downloadFile(file: Documento) {
     const link = document.createElement('a');
-    link.href = `http://localhost:4000/api/convocatorias/documentos/${file.id}/download`;
+    link.href = `${API_URL}/api/convocatorias/documentos/${file.id}/download`;
     link.download = file.fileName || 'archivo.pdf';
     document.body.appendChild(link);
     link.click();

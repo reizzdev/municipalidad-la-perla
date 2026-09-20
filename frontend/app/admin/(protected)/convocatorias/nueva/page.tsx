@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getSession } from '@/lib/auth';
+import { API_URL } from '@/lib/api';
 
 type FileFields = {
   BASES: File | null;
@@ -133,7 +134,7 @@ const [date, setDate] = useState(getToday());
         }
       });
 
-      const res = await fetch('http://localhost:4000/api/convocatorias', {
+      const res = await fetch(`${API_URL}/api/convocatorias`, {
         method: 'POST',
         body: formData,
         headers: {
