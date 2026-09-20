@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+export const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  'https://municipalidad-la-perla-production.up.railway.app';
 
 const api = axios.create({
   baseURL: API_URL,

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { API_URL } from '@/lib/api';
 
 type Noticia = {
   id: string;
@@ -29,7 +30,7 @@ const id = Array.isArray(params.id) ? params.id[0] : params.id;
  useEffect(() => {
   if (!id) return;
 
-fetch(`http://localhost:4000/api/noticias/${id}`)
+  fetch(`${API_URL}/api/noticias/${id}`)
     .then((res) => {
       if (!res.ok) throw new Error('Noticia no encontrada');
       return res.json();
@@ -80,7 +81,7 @@ fetch(`http://localhost:4000/api/noticias/${id}`)
     });
 
     const res = await fetch(
-      `http://localhost:4000/api/noticias/${noticia.id}`,
+      `${API_URL}/api/noticias/${noticia.id}`,
       {
         method: 'PUT',
         headers: {

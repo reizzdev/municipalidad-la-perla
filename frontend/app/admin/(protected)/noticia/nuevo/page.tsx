@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { API_URL } from '@/lib/api';
 
 
 export default function NuevaNoticiaPage() {
@@ -41,7 +42,7 @@ export default function NuevaNoticiaPage() {
         formData.append(`imagen_${index}`, img);
       });
 const token = localStorage.getItem('muni_token');
-    const res = await fetch('http://localhost:4000/api/noticias', {
+    const res = await fetch(`${API_URL}/api/noticias`, {
   method: 'POST',
   headers: {
     Authorization: `Bearer ${token}`,

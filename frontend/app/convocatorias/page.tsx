@@ -9,6 +9,7 @@ import Navbar from '@/components/layout/Navbar';
 import ContactSection from "@/components/sections/ContactSection";
 
 import Footer from "@/components/layout/Footer";
+import { API_URL } from "@/lib/api";
 
 type Documento = {
   id: string;
@@ -35,7 +36,7 @@ export default function ConvocatoriasPage() {
   const [year, setYear] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/convocatorias")
+    fetch(`${API_URL}/api/convocatorias`)
       .then((res) => res.json())
       .then((data) => setItems(data))
       .finally(() => setLoading(false));

@@ -1,28 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-const ALLOWED_IPS = [
-  "192.168.1.34",
-  "::1",
-];
-
-export function middleware(req: NextRequest) {
-  const pathname = req.nextUrl.pathname;
-
-  if (!pathname.startsWith("/admin")) {
-    return NextResponse.next();
-  }
-
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    req.headers.get("x-real-ip") ||
-    "";
-
-  console.log("IP detectada:", ip);
-
-  if (!ALLOWED_IPS.includes(ip)) {
-    return NextResponse.redirect(new URL("/no-autorizado", req.url));
-  }
-
+export function middleware() {
   return NextResponse.next();
 }
 

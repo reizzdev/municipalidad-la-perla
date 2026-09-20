@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { API_URL } from '@/lib/api';
 import Link from 'next/link';
 import { getSession } from '@/lib/auth'; // 👈 usa tu helper
 
@@ -18,7 +19,7 @@ export default function NoticiaPage() {
   const [noticias, setNoticias] = useState<Noticia[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/noticias')
+    fetch(`${API_URL}/api/noticias`)
       .then((res) => res.json())
       .then((data) => setNoticias(Array.isArray(data) ? data : []))
       .catch(() => setNoticias([]));
@@ -36,7 +37,7 @@ export default function NoticiaPage() {
     }
 
     const res = await fetch(
-      `http://localhost:4000/api/noticias/${id}`,
+      `${API_URL}/api/noticias/${id}`,
       {
         method: 'DELETE',
         headers: {
@@ -58,7 +59,7 @@ export default function NoticiaPage() {
 
 const handleToggleDestacada = async (id: string, valor: boolean) => {
   const { token } = getSession();
-  const res = await fetch(`http://localhost:4000/api/noticias/${id}/destacada`, {
+  const res = await fetch(`${API_URL}/api/noticias/${id}/destacada`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -107,7 +108,7 @@ const handleToggleDestacada = async (id: string, valor: boolean) => {
                       <img
                         src={
                           noticia.logoName
-                            ? `http://localhost:4000/api/noticias/${noticia.id}/logo`
+                            ? `${API_URL}/api/noticias/${noticia.id}/logo`
                             : '/noticia.jpg'
                         }
                         alt={noticia.titulo}

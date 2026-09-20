@@ -8,6 +8,7 @@ import Header from '@/components/layout/Header';
 import Navbar from '@/components/layout/Navbar';
 import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/layout/Footer';
+import { API_URL } from '@/lib/api';
 
 type Documento = {
   id: string;
@@ -53,7 +54,7 @@ export default function ConvocatoriaDetallePage() {
   useEffect(() => {
     if (!params.id) return;
 
-    fetch(`http://localhost:4000/api/convocatorias/${params.id}`)
+    fetch(`${API_URL}/api/convocatorias/${params.id}`)
       .then((res) => {
         if (!res.ok) throw new Error('No encontrada');
         return res.json();
@@ -65,7 +66,7 @@ export default function ConvocatoriaDetallePage() {
 
   function downloadFile(file: Documento) {
     const link = document.createElement('a');
-    link.href = `http://localhost:4000/api/convocatorias/documentos/${file.id}/download`;
+    link.href = `${API_URL}/api/convocatorias/documentos/${file.id}/download`;
     link.download = file.fileName || 'archivo.pdf';
     document.body.appendChild(link);
     link.click();

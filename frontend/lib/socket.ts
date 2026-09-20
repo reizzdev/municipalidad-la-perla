@@ -6,7 +6,7 @@ export function getSocket(token?: string): Socket {
   if (socket?.connected) return socket;
 
   socket = io(
-    (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000') + '/calendar',
+    `${process.env.NEXT_PUBLIC_API_URL || 'https://municipalidad-la-perla-production.up.railway.app'}/calendar`,
     {
       auth: token ? { token: `Bearer ${token}` } : {},
       transports: ['websocket'],

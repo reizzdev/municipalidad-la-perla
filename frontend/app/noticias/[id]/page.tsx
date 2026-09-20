@@ -6,6 +6,7 @@ import TopBar from '@/components/layout/TopBar';
 import Header from '@/components/layout/Header';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import { API_URL } from '@/lib/api';
 
 type ImagenNoticia = {
   id: string;
@@ -21,8 +22,6 @@ type Noticia = {
   logoName?: string | null;
   imagenes?: ImagenNoticia[];
 };
-
-const API_URL = 'http://localhost:4000';
 
 export default function DetalleNoticiaPage() {
   const params = useParams();

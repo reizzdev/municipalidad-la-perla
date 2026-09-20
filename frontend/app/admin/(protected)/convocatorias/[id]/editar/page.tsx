@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { getSession } from '@/lib/auth';
+import { API_URL } from '@/lib/api';
 
 const CONVOCATORIA_SECTIONS = [
   'BASES',
@@ -77,7 +78,7 @@ export default function EditarConvocatoriaPage() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:4000/api/convocatorias/${params.id}`)
+    fetch(`${API_URL}/api/convocatorias/${params.id}`)
       .then((res) => {
         if (!res.ok) throw new Error('No se pudo cargar la convocatoria');
         return res.json();
@@ -166,7 +167,7 @@ export default function EditarConvocatoriaPage() {
       }
 
       const res = await fetch(
-        `http://localhost:4000/api/convocatorias/${item.id}`,
+        `${API_URL}/api/convocatorias/${item.id}`,
         {
           method: 'PUT',
           headers: {
@@ -199,7 +200,7 @@ export default function EditarConvocatoriaPage() {
 
       if (index > 0) {
         const uploadRes = await fetch(
-          `http://localhost:4000/api/convocatorias/${item.id}/documentos`,
+          `${API_URL}/api/convocatorias/${item.id}/documentos`,
           {
             method: 'POST',
             headers: {
