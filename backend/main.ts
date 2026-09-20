@@ -24,6 +24,7 @@ app.enableCors({
   credentials: true,
 });
 
+
   // Prefijo global de la API
   app.setGlobalPrefix('api');
 
