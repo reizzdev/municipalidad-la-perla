@@ -21,6 +21,8 @@ async function bootstrap() {
   // CORS para Next.js frontend
 app.enableCors({
   origin: 'https://municipalidad-la-perla-production.up.railway.app',
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 });
 
@@ -31,7 +33,7 @@ app.enableCors({
   console.log('PORT=', process.env.PORT);
 console.log('DATABASE_URL=', !!process.env.DATABASE_URL);
 
-  await app.listen(process.env.PORT || 4000);
+  await app.listen(process.env.PORT || 4000, '0.0.0.0');
   console.log(`🚀 Backend corriendo en http://localhost:${process.env.PORT || 4000}`);
 }
 bootstrap();
