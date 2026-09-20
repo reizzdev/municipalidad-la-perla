@@ -424,7 +424,7 @@ export default function AdminDashboard() {
 
           {incidResumen.length === 0 ? (
             <p className="text-sm text-slate-400 mt-4">
-              Sin incidencias en este período 🎉
+              Sin incidencias en este período
             </p>
           ) : (
             <div className="space-y-3">
