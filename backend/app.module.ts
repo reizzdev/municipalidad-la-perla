@@ -12,7 +12,7 @@ import { ConvocatoriasModule } from 'src/convocatorias/convocatorias.module';
 import { NoticiasModule } from 'src/noticias/noticias.module';
 import { PermissionsGuard } from 'src/auth/permissions.guard';
 import { IncidenciasModule } from 'src/incidencias/incidencias.module';
-
+import { AppController } from './app.controller';
 @Module({
   imports: [
     // Variables de entorno disponibles en toda la app
@@ -28,6 +28,7 @@ import { IncidenciasModule } from 'src/incidencias/incidencias.module';
     NoticiasModule,
     IncidenciasModule,
   ],
+   controllers: [AppController],
   providers: [CalendarGateway, PermissionsGuard,],
 })
 export class AppModule {}

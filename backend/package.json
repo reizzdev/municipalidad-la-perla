@@ -10,7 +10,8 @@
     "start": "node dist/main",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main"
+    "start:prod": "node dist/main",
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -39,6 +40,7 @@
     "@types/passport-jwt": "^3.0.8",
     "prisma": "^6.0.0",
     "ts-node": "^10.9.1",
+    "tsx": "^4.23.15",
     "typescript": "^6.0.2"
   },
   "prisma": {
